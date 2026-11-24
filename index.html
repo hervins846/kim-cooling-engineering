@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KIM-COOLING 2029 | Spatial Thermal OS &amp; Ingénierie Froid — Pointe-Noire</title>
+  <title>KIM-COOLING | Ingénierie Froid, Climatisation &amp; Énergie — Pointe-Noire</title>
   <link rel="stylesheet" href="styles/kim2029.css" />
 </head>
 <body>
@@ -13,118 +13,136 @@
     <div class="brand-wrap">
       <img src="actifs/logo-kim-cooling.png" alt="Logo KIM-COOLING" class="brand-logo" onerror="this.style.display='none'" />
       <div>
-        <div class="brand-title">KIM-COOLING <span class="badge-2029">OS 2029</span></div>
+        <div class="brand-title">KIM-COOLING</div>
         <div class="brand-sub">Pointe-Noire, République du Congo • Fondée en 2017 • Dir. Dorsel Kimbouala-Ngoma</div>
       </div>
     </div>
 
     <nav class="nav-pills" aria-label="Navigation principale">
-      <button type="button" class="nav-btn active" data-tab="cockpit">Cockpit 2029</button>
+      <button type="button" class="nav-btn active" data-tab="accueil">Accueil &amp; Histoire</button>
+      <button type="button" class="nav-btn" data-tab="services">Services &amp; Motivations</button>
       <button type="button" class="nav-btn" data-tab="projets">Projets ORCA &amp; MSC</button>
-      <button type="button" class="nav-btn" data-tab="formations">Formations (2 à 6 mois)</button>
+      <button type="button" class="nav-btn" data-tab="formations">Formations</button>
       <button type="button" class="nav-btn" data-tab="contact">Contact &amp; RDV</button>
     </nav>
 
     <div class="dg-actions">
       <button type="button" id="btn-dg-link" class="btn-neon">Lien Exécutif DG</button>
-      <span id="dg-status" class="status-pill">Mode Standard</span>
+      <span id="dg-status" class="status-pill">Visiteur</span>
     </div>
   </header>
 
   <main class="container">
-    <section class="hero-spatial">
+    <section class="hero-vitrine">
       <div class="hero-copy">
-        <p class="eyebrow">SPATIAL THERMAL TWIN • AUDIT ÉNERGÉTIQUE • GMAO PRÉDICTIVE</p>
-        <h1>L'ingénierie du froid et de la climatisation projetée en <span class="grad-text">2029</span>.</h1>
+        <p class="eyebrow">CLIMATISATION • RÉFRIGATION INDUSTRIELLE &amp; MARITIME • FORMATION</p>
+        <h1>Excellence en Service Client et <span class="grad-text">Solutions de Froid</span> sur mesure.</h1>
         <p class="hero-desc">
-          De la climatisation split et centrale aux chambres froides industrielles, groupes solaires et navires frigorifiques à Pointe-Noire : pilotez la performance thermique, le COP et les interventions terrain en temps réel.
+          Entreprise de référence à Pointe-Noire, en République du Congo et dans la région, KIM-COOLING accompagne particuliers, commerces, industries et acteurs maritimes avec des installations fiables, durables et éco-responsables.
         </p>
         <div class="hero-cta-row">
-          <button type="button" class="btn-primary" onclick="document.querySelector('[data-tab=&quot;projets&quot;]').click()">Explorer ORCA &amp; Navire MSC</button>
+          <button type="button" class="btn-primary" onclick="document.querySelector('[data-tab=&quot;projets&quot;]').click()">Découvrir nos Projets</button>
           <a href="tel:+242064174949" class="btn-ghost">+242 06 417 49 49</a>
         </div>
       </div>
 
-      <div class="hero-twin-card">
-        <div class="twin-header">
-          <span>Jumeau Thermique Prédictif (Simulé)</span>
-          <span class="live-dot">ACTIF</span>
-        </div>
-        <div class="slider-group">
-          <label for="amb-temp">Température extérieure Pointe-Noire : <strong id="amb-temp-val">31°C</strong></label>
-          <input type="range" id="amb-temp" min="24" max="40" value="31" />
-        </div>
-        <div class="slider-group">
-          <label for="solar-load">Charge solaire &amp; frigorifique : <strong id="solar-load-val">78%</strong></label>
-          <input type="range" id="solar-load" min="20" max="100" value="78" />
-        </div>
-        <div class="twin-metrics">
-          <div class="mini-box">
-            <span>COP Estimé</span>
-            <strong id="cop-readout">4.32</strong>
-          </div>
-          <div class="mini-box">
-            <span>Économie Énergie</span>
-            <strong id="eco-readout">-28.4%</strong>
-          </div>
-          <div class="mini-box">
-            <span>Risque Compresseur</span>
-            <strong id="risk-readout">Faible</strong>
+      <aside class="glass-card dg-spotlight">
+        <div class="dg-header">
+          <img src="actifs/dg-dorsel.jpg" alt="Dorsel Kimbouala-Ngoma, Directeur Général de KIM-COOLING" class="dg-photo" onerror="this.style.display='none'" />
+          <div>
+            <span class="mini-tag">Direction Générale</span>
+            <h2>Dorsel Kimbouala-Ngoma</h2>
+            <p class="muted-note">Fondateur • Ingénieur en mécanique de production • Pointe-Noire (depuis 2017)</p>
           </div>
         </div>
-      </div>
+        <p class="dg-quote">
+          « Combler durablement le manque local en solutions de froid et de climatisation, offrir un service client attentif et former la jeunesse congolaise aux métiers techniques de demain. »
+        </p>
+      </aside>
     </section>
 
     <section class="kpi-grid">
       <article class="glass-card kpi-card">
-        <span class="kpi-label">Fondation &amp; Ancrage</span>
-        <strong class="kpi-val">2017 • PNR</strong>
-        <span class="kpi-meta">Dir. Dorsel Kimbouala-Ngoma</span>
+        <span class="kpi-label">Création</span>
+        <strong class="kpi-val">2017</strong>
+        <span class="kpi-meta">Pointe-Noire, Rép. du Congo</span>
       </article>
       <article class="glass-card kpi-card">
-        <span class="kpi-label">Grands Comptes &amp; Partenaires</span>
-        <strong class="kpi-val">MSC • ORCA</strong>
-        <span class="kpi-meta">Expertise France • UCAC-ICAM</span>
+        <span class="kpi-label">Références Clés</span>
+        <strong class="kpi-val">ORCA &amp; MSC</strong>
+        <span class="kpi-meta">Industriel, commercial &amp; maritime</span>
       </article>
       <article class="glass-card kpi-card">
-        <span class="kpi-label">Parcours de Formation</span>
+        <span class="kpi-label">Formations</span>
         <strong class="kpi-val">2 à 6 Mois</strong>
-        <span class="kpi-meta">Niveaux BAC • Licence • Master</span>
+        <span class="kpi-meta">BAC • Licence • Master</span>
       </article>
       <article class="glass-card kpi-card">
-        <span class="kpi-label">Conformité &amp; Audit</span>
-        <strong class="kpi-val">ISO &amp; Éco</strong>
-        <span class="kpi-meta">Fluides verts &amp; chambres froides</span>
+        <span class="kpi-label">Disponibilité</span>
+        <strong class="kpi-val">Lun–Sam</strong>
+        <span class="kpi-meta">08h–17h (Sam 08h–12h)</span>
       </article>
     </section>
 
-    <section id="tab-cockpit" class="tab-panel active">
+    <section id="tab-accueil" class="tab-panel active">
       <div class="two-col">
         <div class="glass-card">
-          <h2>Piliers d'Expertise KIM-COOLING</h2>
-          <ul class="feature-list">
-            <li><strong>Installation Climatisation :</strong> Split, multi-split, climatisation centralisée et confort.</li>
-            <li><strong>Réfrigération HVAC &amp; Chambres Froides :</strong> Agroalimentaire, pharmaceutique, contrôle de conformité.</li>
-            <li><strong>Maintenance Préventive &amp; Corrective :</strong> Fiabilité compresseurs, nettoyage, dépannage rapide.</li>
-            <li><strong>Audit Énergétique &amp; Équipements :</strong> Optimisation conso, fourniture compresseurs, outillage, postes à souder.</li>
-          </ul>
+          <h2>Notre Histoire</h2>
+          <p class="body-copy">
+            Fondée en 2017 à Pointe-Noire par Dorsel Kimbouala-Ngoma, jeune ingénieur en mécanique de production, KIM-COOLING est née de la volonté de combler un manque local en services de climatisation et de réfrigération efficaces.
+          </p>
+          <p class="body-copy">
+            Partant d'une petite équipe dynamique, l'entreprise s'est concentrée sur des installations personnalisées pour des clients variés — des petits commerces aux bâtiments industriels — en se démarquant par un service client sur mesure et un engagement durable.
+          </p>
+          <div class="photo-pair">
+            <img src="actifs/histoire-solaire.jpg" alt="Système frigorifique et panneau solaire KIM-COOLING" class="story-img" onerror="this.style.display='none'" />
+            <img src="actifs/histoire-terrain.jpg" alt="Intervention technique KIM-COOLING" class="story-img" onerror="this.style.display='none'" />
+          </div>
         </div>
-        <div class="glass-card">
-          <h2>Ils nous font confiance (Références)</h2>
-          <div class="partner-chips" id="partner-list"></div>
-          <p class="muted-note">Historique : née à Pointe-Noire pour combler le manque local en froid et climatisation avec solutions solaires et sur mesure.</p>
+
+        <div class="stack-col">
+          <div class="glass-card">
+            <h2>Vision de l'entreprise</h2>
+            <ul class="feature-list">
+              <li>Devenir le leader en solutions de froid et de climatisation éco-responsables en Afrique, en intégrant des technologies modernes et des pratiques durables.</li>
+              <li>Être l'entreprise de référence en République du Congo et dans la région pour des solutions personnalisées.</li>
+              <li>Devenir un centre d'excellence pour la formation et l'expertise technique en froid et climatisation.</li>
+            </ul>
+          </div>
+
+          <div class="glass-card">
+            <h2>Mission, Valeurs &amp; Motivations</h2>
+            <p class="body-copy">
+              Fournir des solutions de climatisation et de réfrigération innovantes, efficaces et écologiques, tout en formant les jeunes aux compétences attendues sur le marché de l'emploi congolais.
+            </p>
+            <p class="body-copy">
+              <strong>Nos valeurs :</strong> l'intégrité (honnêteté et transparence) et la qualité (respect strict des normes de l'industrie, sécurité des fluides frigorigènes, réactivité et suivi après intervention).
+            </p>
+          </div>
         </div>
+      </div>
+
+      <div class="glass-card mt-section">
+        <h2>Ils nous font confiance</h2>
+        <div class="partner-chips" id="partner-list"></div>
+      </div>
+    </section>
+
+    <section id="tab-services" class="tab-panel">
+      <div class="glass-card">
+        <h2>Nos Services &amp; Pourquoi nous choisir</h2>
+        <div class="cards-grid" id="services-grid"></div>
       </div>
     </section>
 
     <section id="tab-projets" class="tab-panel">
       <div class="glass-card">
         <div class="panel-top">
-          <h2>Projets Réalisés — Chantiers Phares</h2>
+          <h2>Les Projets Réalisés</h2>
           <div class="filter-row">
             <button type="button" class="chip active" data-filter="all">Tous</button>
-            <button type="button" class="chip" data-filter="industriel">Industriel / ORCA</button>
-            <button type="button" class="chip" data-filter="maritime">Maritime / MSC</button>
+            <button type="button" class="chip" data-filter="industriel">Projet ORCA</button>
+            <button type="button" class="chip" data-filter="maritime">Navire MSC</button>
           </div>
         </div>
         <div class="cards-grid" id="projects-grid"></div>
@@ -134,7 +152,7 @@
     <section id="tab-formations" class="tab-panel">
       <div class="glass-card">
         <div class="panel-top">
-          <h2>Nos Formations (Locaux ou Université)</h2>
+          <h2>Nos Formations (Dans nos locaux ou à l'université)</h2>
           <div class="filter-row">
             <button type="button" class="chip active" data-duration="all">Toutes durées</button>
             <button type="button" class="chip" data-duration="2/6 mois">2/6 mois</button>
@@ -151,18 +169,19 @@
       <div class="two-col">
         <div class="glass-card">
           <h2>Contact Experts — Pointe-Noire</h2>
-          <p><strong>Adresse :</strong> Pointe-Noire, République du Congo</p>
-          <p><strong>Téléphones :</strong> +242 06 417 49 49 • +242 04 447 42 32</p>
-          <p><strong>Emails :</strong> contact@kim-cooling.com • dieuselkim@gmail.com</p>
-          <p><strong>Horaires :</strong> Lundi – Vendredi : 08h – 17h • Samedi : 08h – 12h</p>
+          <p class="body-copy"><strong>Adresse :</strong> Pointe-Noire, République du Congo</p>
+          <p class="body-copy"><strong>Téléphone :</strong> +242 06 417 49 49 / +242 04 447 42 32</p>
+          <p class="body-copy"><strong>Email :</strong> contact@kim-cooling.com / dieuselkim@gmail.com</p>
+          <p class="body-copy"><strong>Heures d'ouverture :</strong> Lundi – Vendredi : 08h – 17h • Samedi : 08h – 12h</p>
         </div>
+
         <form id="rdv-form" class="glass-card">
           <h2>Planifier un rendez-vous</h2>
           <input type="text" id="rdv-nom" placeholder="Nom(s) &amp; prénom(s)" required />
-          <input type="tel" id="rdv-tel" placeholder="Téléphone (+242 ...)" required />
+          <input type="tel" id="rdv-tel" placeholder="Téléphone" required />
           <input type="email" id="rdv-email" placeholder="Email" required />
-          <input type="text" id="rdv-adresse" placeholder="Adresse / Quartier à Pointe-Noire" required />
-          <input type="text" id="rdv-objet" placeholder="Objet (Audit, Chambre froide, Formation, Devis)" required />
+          <input type="text" id="rdv-adresse" placeholder="Adresse" required />
+          <input type="text" id="rdv-objet" placeholder="Objet" required />
           <button type="submit" class="btn-primary">Envoyer la demande</button>
           <p id="rdv-feedback" class="feedback-msg"></p>
         </form>
