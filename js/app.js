@@ -1,9 +1,4 @@
-﻿document.addEventListener("pointermove", (e) => {
-  document.documentElement.style.setProperty("--mx", `${e.clientX}px`);
-  document.documentElement.style.setProperty("--my", `${e.clientY}px`);
-});
-
-const PARTNERS = [
+﻿const PARTNERS = [
   "MSC",
   "ORCA",
   "Expertise France (Groupe AFD)",
@@ -16,34 +11,34 @@ const PARTNERS = [
 
 const SERVICES = [
   {
-    tag: "Service • Climatisation",
+    tag: "Climatisation",
     title: "Installation de systèmes de climatisation",
     desc: "Mise en place de climatiseurs split, multi-split, systèmes de climatisation centralisée et solutions adaptées aux besoins spécifiques des clients."
   },
   {
-    tag: "Service • HVAC",
+    tag: "Réfrigération HVAC",
     title: "Installation de systèmes de réfrigération HVAC",
-    desc: "Installation de chambres froides, vitrines réfrigérées et systèmes de réfrigération pour l'agroalimentaire, la pharmacie et l'industrie."
+    desc: "Installation de chambres froides, vitrines réfrigérées et systèmes de réfrigération pour l'agroalimentaire, la pharmacie, etc."
   },
   {
-    tag: "Service • Maintenance",
+    tag: "Maintenance",
     title: "Maintenance préventive & corrective",
-    desc: "Contrôle, nettoyage et réparation des équipements de climatisation et de réfrigération pour prévenir les pannes et garantir un fonctionnement optimal."
+    desc: "Services réguliers pour vérifier, nettoyer et réparer les composants des systèmes de climatisation et de réfrigération afin d'éviter les pannes futures."
   },
   {
-    tag: "Service • Conseil",
+    tag: "Audit Énergétique",
     title: "Audit énergétique et conseils",
     desc: "Évaluation de l'efficacité énergétique des installations existantes et recommandations pour améliorer les performances et réduire les coûts d'exploitation."
   },
   {
-    tag: "Service • Équipements",
+    tag: "Équipements",
     title: "Vente et fourniture d'équipements",
-    desc: "Fourniture d'équipements de climatisation et de réfrigération : compresseurs industriels, postes à souder, outillage de maintenance froid."
+    desc: "Offre d'équipements de climatisation et de réfrigération : compresseurs industriels, postes à souder, outillage de maintenance froid."
   },
   {
-    tag: "Service • Conformité",
+    tag: "Conformité",
     title: "Expertise et contrôle des conformités des chambres froides",
-    desc: "Étude, contrôle et réalisation de travaux de plomberie industrielle, maintenance industrielle et maintenance multi-technique."
+    desc: "Étude, contrôle et réalisation des travaux de plomberie industrielle, maintenance industrielle et maintenance multi-technique."
   }
 ];
 
@@ -59,8 +54,8 @@ const PROJECTS = [
     title: "Projet Navire MSC : Installation frigorifique",
     category: "maritime",
     image: "actifs/projet-msc.jpg",
-    badge: "Maritime • Chaîne du Froid",
-    desc: "Conception, installation et maintenance de systèmes de réfrigération sur un navire de la Mediterranean Shipping Company (MSC) pour sécuriser la conservation et le transport de marchandises périssables."
+    badge: "Maritime • Réfrigération",
+    desc: "Conception, installation et maintenance de systèmes de réfrigération sur un navire de la Mediterranean Shipping Company (MSC) pour garantir la conservation et le transport sécurisé des marchandises périssables."
   }
 ];
 
@@ -81,7 +76,7 @@ const FORMATIONS = [
 
 const partnerContainer = document.getElementById("partner-list");
 if (partnerContainer) {
-  partnerContainer.innerHTML = PARTNERS.map((p) => `<span class="chip-badge">${p}</span>`).join("");
+  partnerContainer.innerHTML = PARTNERS.map((p) => `<span class="partner-badge">${p}</span>`).join("");
 }
 
 const servicesGrid = document.getElementById("services-grid");
