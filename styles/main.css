@@ -1,0 +1,495 @@
+:root {
+  --bg-main: #06212e;
+  --bg-panel: #0a2b3c;
+  --bg-dark: #04161f;
+  --teal: #11606b;
+  --cyan: #28ebff;
+  --copper: #ce701a;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --border: rgba(40, 235, 255, 0.18);
+  --success: #34d399;
+  --warning: #fbbf24;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+
+html,
+body {
+  background: var(--bg-main);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Layout Principal */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Barre Latérale */
+.sidebar {
+  width: 290px;
+  background: var(--bg-dark);
+  border-right: 1px solid var(--border);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-shrink: 0;
+}
+
+/* Bloc Logo KIM-COOLING */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.8rem;
+}
+
+.logo-box {
+  background: #ffffff;
+  border: 2px solid rgba(40, 235, 255, 0.55);
+  border-radius: 10px;
+  padding: 4px 8px;
+  width: 96px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.kc-logo-img {
+  display: none;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.kc-logo-img.loaded {
+  display: block;
+}
+
+.kc-logo-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.brand-titles h2 {
+  font-size: 1.02rem;
+  color: var(--cyan);
+  letter-spacing: 0.6px;
+  font-weight: 700;
+}
+
+.brand-titles span {
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 1px;
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* Menu de Navigation */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.nav-item {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--muted);
+  text-align: left;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  background: rgba(40, 235, 255, 0.06);
+  color: var(--text);
+}
+
+.nav-item.active {
+  background: rgba(40, 235, 255, 0.12);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* Panneau de Partage Lien DG / Client */
+.share-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--copper);
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.badge-live {
+  font-size: 0.7rem;
+  color: var(--success);
+  font-weight: 700;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.share-panel p {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.toast {
+  font-size: 0.78rem;
+  color: var(--success);
+  min-height: 18px;
+  font-weight: 600;
+}
+
+/* Zone de Travail Principale */
+.workspace {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.8rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.header h1 {
+  font-size: 1.45rem;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.meta-info {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin-top: 4px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* Transitions d'Onglets */
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cartes KPI & Panneaux */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi,
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.3rem;
+  margin-bottom: 1.4rem;
+}
+
+.kpi span {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.kpi strong {
+  display: block;
+  font-size: 1.4rem;
+  font-family: "JetBrains Mono", monospace;
+  color: var(--cyan);
+  margin: 6px 0;
+}
+
+.kpi small {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.kpi small.up {
+  color: var(--success);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+}
+
+.panel h3 {
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+  color: var(--cyan);
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.desc {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  line-height: 1.45;
+}
+
+/* Partenaires */
+.partners-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.partner-card {
+  background: var(--bg-dark);
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  border-left: 3px solid var(--copper);
+}
+
+.partner-card strong {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.partner-card span {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* Formulaires & Boutons */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.9rem;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+input,
+select {
+  background: var(--bg-dark);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.75rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  width: 100%;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 2px rgba(40, 235, 255, 0.12);
+}
+
+.btn {
+  padding: 0.75rem 1.1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 0.88rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-cyan {
+  background: var(--cyan);
+  color: var(--bg-dark);
+}
+
+.btn-copper {
+  background: var(--copper);
+  color: #ffffff;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+}
+
+.btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+/* Tableaux */
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.85rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+
+th {
+  color: var(--cyan);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+tr:hover td {
+  background: rgba(40, 235, 255, 0.03);
+}
+
+.pill {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--teal);
+  color: var(--text);
+  display: inline-block;
+}
+
+.pill.warn {
+  background: rgba(206, 112, 26, 0.22);
+  color: var(--warning);
+  border: 1px solid var(--copper);
+}
+
+/* Aperçu QR Code */
+.qr-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.qr-frame {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  margin: 1rem 0;
+  min-width: 217px;
+  min-height: 217px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--cyan);
+}
+
+.qr-details {
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.qr-details strong {
+  display: block;
+  color: var(--cyan);
+  margin-bottom: 4px;
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* Canvas Graphiques */
+canvas {
+  max-width: 100%;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .grid-2,
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace {
+    padding: 1.25rem;
+  }
+}

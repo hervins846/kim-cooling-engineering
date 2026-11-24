@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      KIM COOLING ENGINEERING | ERP, GMAO, Supervision HVAC & Marchés
+    </title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="manifest" href="manifest.json" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="layout">
+      <!-- SIDEBAR NAVIGATION -->
+      <aside class="sidebar">
+        <div>
+          <div class="brand">
+            <div class="logo-box" title="KIM-COOLING">
+              <img
+                src="assets/logo-kim-cooling.png"
+                alt="Logo KIM-COOLING"
+                class="kc-logo-img"
+                onload="
+                  this.classList.add('loaded');
+                  this.nextElementSibling.style.display = 'none';
+                "
+                onerror="this.style.display = 'none'"
+              />
+              <svg
+                viewBox="0 0 150 120"
+                class="kc-logo-svg"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-label="Logo KIM-COOLING"
+              >
+                <!-- Arc supérieur -->
+                <path
+                  d="M 22 68 A 53 53 0 0 1 128 68"
+                  fill="none"
+                  stroke="#1D4ED8"
+                  stroke-width="2.6"
+                  stroke-linecap="round"
+                />
+                <!-- Barre verticale gauche du K -->
+                <polygon points="35,34 48,34 40,78 27,78" fill="#0B1320" />
+                <!-- Éclair bleu du K -->
+                <polygon
+                  points="62,32 45,56 56,56 47,80 69,50 58,50"
+                  fill="#1D4ED8"
+                />
+                <!-- Lettre C bleue -->
+                <path
+                  d="M 107 43 A 22 22 0 1 0 107 71"
+                  fill="none"
+                  stroke="#1E40AF"
+                  stroke-width="11.5"
+                  stroke-linecap="butt"
+                />
+                <!-- Flocon de neige au centre du C -->
+                <g stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round">
+                  <line x1="95" y1="47" x2="95" y2="67" />
+                  <line x1="85" y1="57" x2="105" y2="57" />
+                  <line x1="88" y1="50" x2="102" y2="64" />
+                  <line x1="102" y1="50" x2="88" y2="64" />
+                </g>
+                <!-- Texte KIM-COOLING sous le monogramme -->
+                <text
+                  x="75"
+                  y="97"
+                  text-anchor="middle"
+                  fill="#0F172A"
+                  font-family="Inter, Arial, sans-serif"
+                  font-size="10.5"
+                  font-weight="800"
+                  letter-spacing="1.1"
+                >
+                  KIM-COOLING
+                </text>
+              </svg>
+            </div>
+            <div class="brand-titles">
+              <h2>KIM COOLING</h2>
+              <span>ENGINEERING • PNR</span>
+            </div>
+          </div>
+
+          <nav class="nav">
+            <button class="nav-item active" data-view="dg">
+              📊 Cockpit Direction (DG)
+            </button>
+            <button class="nav-item" data-view="marches">
+              🏗️ Marchés & Appels d'Offres
+            </button>
+            <button class="nav-item" data-view="gmao">
+              🛠️ GMAO & Passeports QR
+            </button>
+            <button class="nav-item" data-view="hvac">
+              ❄️ Supervision HVAC & COP
+            </button>
+            <button class="nav-item" data-view="stock">
+              📦 Stock & Fluides Verts
+            </button>
+            <button class="nav-item" data-view="client">
+              🏢 Portail Client (Aperçu)
+            </button>
+          </nav>
+        </div>
+
+        <div class="share-panel">
+          <span class="badge-live">● PRÊT POUR DÉPLOIEMENT</span>
+          <p>Partager l'accès instantané avec le Directeur Général :</p>
+          <button id="btnShareDG" class="btn btn-copper">
+            🔗 Copier Lien Exécutif DG
+          </button>
+          <button id="btnShareClient" class="btn btn-outline">
+            🔗 Copier Lien Espace Client
+          </button>
+          <div id="toastMsg" class="toast"></div>
+        </div>
+      </aside>
+
+      <!-- MAIN WORKSPACE -->
+      <main class="workspace">
+        <header class="header">
+          <div>
+            <h1 id="viewTitle">Cockpit Exécutif — Direction Générale</h1>
+            <p class="meta-info">
+              Pointe-Noire, République du Congo • Ingénierie Froid,
+              Climatisation & Énergie
+            </p>
+          </div>
+          <div class="header-actions">
+            <button id="btnExportReport" class="btn btn-cyan">
+              📥 Exporter Bilan (CSV)
+            </button>
+          </div>
+        </header>
+
+        <!-- 1. VUE DIRECTION GÉNÉRALE -->
+        <section id="view-dg" class="view active">
+          <div class="kpi-row">
+            <div class="kpi">
+              <span>Portefeuille Marchés</span>
+              <strong id="statCa">194 000 000 FCFA</strong>
+              <small class="up">▲ +34% vs N-1 (Grands Comptes)</small>
+            </div>
+            <div class="kpi">
+              <span>Disponibilité Parc GMAO</span>
+              <strong>99.4 %</strong>
+              <small class="up">MTTR moyen : 1h 45min</small>
+            </div>
+            <div class="kpi">
+              <span>Équipements Tracés (QR)</span>
+              <strong id="statQr">218 Actifs</strong>
+              <small>ORCA, MSC, SARIS Congo</small>
+            </div>
+            <div class="kpi">
+              <span>Bilan Carbone & Fluides</span>
+              <strong>-18.5 tCO₂</strong>
+              <small class="up">Conformité ISO & Gaz Éco</small>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Performance Financière & Exécution Marchés</h3>
+              <canvas id="financeChart" height="200"></canvas>
+            </div>
+            <div class="panel">
+              <h3>Grands Comptes & Partenaires Stratégiques</h3>
+              <div class="partners-grid"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. VUE MARCHÉS & APPELS D'OFFRES -->
+        <section id="view-marches" class="view">
+          <div class="panel">
+            <h3>Enregistrer un Nouveau Marché / Contrat Cadre</h3>
+            <form id="formMarche" class="form-grid">
+              <input
+                type="text"
+                id="inClient"
+                placeholder="Client (ex: TotalEnergies, MSC, SARIS Congo)"
+                required
+              />
+              <input
+                type="text"
+                id="inObjet"
+                placeholder="Objet du marché (ex: Installation 4 Chambres Froides)"
+                required
+              />
+              <select id="inType">
+                <option value="Froid Industriel & Naval">
+                  Froid Industriel & Naval
+                </option>
+                <option value="Climatisation Centralisée VRV">
+                  Climatisation Centralisée VRV
+                </option>
+                <option value="Contrat Maintenance GMAO">
+                  Contrat Maintenance GMAO
+                </option>
+                <option value="Audit Énergétique">Audit Énergétique</option>
+                <option value="Partenariat Académique & Technique">
+                  Partenariat Académique & Technique
+                </option>
+              </select>
+              <input
+                type="number"
+                id="inMontant"
+                placeholder="Montant HT (FCFA)"
+                required
+              />
+              <select id="inAvancement">
+                <option value="100% - Livré">100% - Livré & Réceptionné</option>
+                <option value="65% - En exécution">
+                  65% - En cours d'exécution
+                </option>
+                <option value="25% - Étude & Appro">
+                  25% - Étude & Approvisionnement
+                </option>
+                <option value="Offre déposée">Offre soumissionnée</option>
+              </select>
+              <button type="submit" class="btn btn-cyan">
+                + Ajouter au Pipeline
+              </button>
+            </form>
+          </div>
+
+          <div class="panel">
+            <h3>Suivi des Marchés KIM COOLING ENGINEERING</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Code Marché</th>
+                    <th>Client</th>
+                    <th>Description Technique</th>
+                    <th>Montant (FCFA)</th>
+                    <th>Avancement</th>
+                    <th>Passeport QR</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodyMarches"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. VUE GMAO & PASSEPORTS QR -->
+        <section id="view-gmao" class="view">
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Générateur de Plaque QR Code Équipement (GMAO)</h3>
+              <p class="desc">
+                Chaque machine reçoit un identifiant unique. Le scan sur site
+                affiche le carnet d'entretien, les pressions et les alertes de
+                maintenance préventive.
+              </p>
+              <form id="formQr" class="stack">
+                <input
+                  type="text"
+                  id="qrTag"
+                  placeholder="Tag Équipement (ex: CF-MSC-014)"
+                  required
+                />
+                <input
+                  type="text"
+                  id="qrSite"
+                  placeholder="Site / Navire (ex: Terminal Conteneurs Pointe-Noire)"
+                  required
+                />
+                <input
+                  type="text"
+                  id="qrMachine"
+                  placeholder="Équipement (ex: Groupe Condenseur Bitzer 40kW)"
+                  required
+                />
+                <div class="form-row">
+                  <input
+                    type="text"
+                    id="qrFluide"
+                    placeholder="Fluide (ex: R-449A)"
+                    required
+                  />
+                  <input type="date" id="qrNextMaint" required />
+                </div>
+                <button type="submit" class="btn btn-cyan">
+                  Générer le QR Code Industriel
+                </button>
+              </form>
+            </div>
+
+            <div class="panel qr-card">
+              <h3>Plaque Signalétique Numérique</h3>
+              <div id="qrCanvas" class="qr-frame"></div>
+              <div id="qrInfoBox" class="qr-details">
+                <strong>KIM COOLING ENGINEERING • PNR</strong>
+                <p id="qrCaption">
+                  Saisissez un équipement pour éditer sa plaque QR
+                </p>
+              </div>
+              <button
+                id="btnDownloadQr"
+                class="btn btn-copper"
+                style="display: none"
+              >
+                ⬇️ Télécharger la Plaque QR (PNG)
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. VUE SUPERVISION HVAC & COP -->
+        <section id="view-hvac" class="view">
+          <div class="kpi-row">
+            <div class="kpi">
+              <span>Chambre Froide Négative #1</span><strong>-22.4 °C</strong
+              ><small class="up">Consigne : -22.0 °C (Stable)</small>
+            </div>
+            <div class="kpi">
+              <span>Chambre Froide Positive #2</span><strong>+3.1 °C</strong
+              ><small class="up">Consigne : +3.0 °C (Stable)</small>
+            </div>
+            <div class="kpi">
+              <span>COP Moyen Installation</span><strong>3.85</strong
+              ><small class="up">Rendement Énergétique Optimal</small>
+            </div>
+            <div class="kpi">
+              <span>Surchauffe / Sous-refroidissement</span
+              ><strong>6.2 K / 4.5 K</strong
+              ><small>Circuit Frigorifique Sain</small>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <h3>
+                Télémétrie Thermodynamique Temps Réel (Simulation Capteurs)
+              </h3>
+              <button id="btnSimulerPanne" class="btn btn-outline">
+                ⚡ Simuler Dérive Thermique
+              </button>
+            </div>
+            <canvas id="telemetryChart" height="190"></canvas>
+          </div>
+        </section>
+
+        <!-- 5. VUE STOCK & FLUIDES -->
+        <section id="view-stock" class="view">
+          <div class="panel">
+            <h3>
+              Inventaire Pièces Critiques & Traçabilité Fluides Frigorigènes
+            </h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Réf. Pièce</th>
+                    <th>Désignation</th>
+                    <th>Catégorie</th>
+                    <th>Stock Pointe-Noire</th>
+                    <th>Seuil Alerte</th>
+                    <th>État</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodyStock"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. PORTAIL CLIENT B2B -->
+        <section id="view-client" class="view">
+          <div class="panel">
+            <h3>Espace Client B2B — Suivi des Interventions & Conformité</h3>
+            <p class="desc">
+              Interface dédiée aux clients sous contrat (MSC, ORCA, SARIS Congo,
+              Expertise France) pour suivre leurs interventions et demander un
+              dépannage d'urgence 24/7.
+            </p>
+            <div class="kpi-row" style="margin-top: 1rem">
+              <div class="kpi">
+                <span>Contrat Actif</span><strong>GOLD 24/7</strong
+                ><small>Délai d'intervention &lt; 2h</small>
+              </div>
+              <div class="kpi">
+                <span>Dernière Visite Préventive</span
+                ><strong>18 Nov. 2026</strong
+                ><small>Contrôle étanchéité & filtres OK</small>
+              </div>
+              <div class="kpi">
+                <span>Prochaine Échéance</span><strong>18 Fév. 2027</strong
+                ><small>Planifiée automatiquement</small>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

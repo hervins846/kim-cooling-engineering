@@ -1,0 +1,14 @@
+{
+  "name": "KIM COOLING ENGINEERING",
+  "short_name": "KC Engineering",
+  "description": "Plateforme Ingénierie, Gestion des Marchés, Supervision HVAC, Stock & Traçabilité QR — KIM COOLING ENGINEERING (Pointe-Noire, République du Congo)",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#06212E",
+  "theme_color": "#28EBFF",
+  "lang": "fr",
+  "categories": ["business", "engineering", "productivity"],
+  "icons": []
+}
