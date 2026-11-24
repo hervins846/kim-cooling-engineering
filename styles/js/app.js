@@ -1,280 +1,318 @@
-let marches =
-  JSON.parse(localStorage.getItem("kc_engineering_marches")) || INITIAL_MARCHES;
-let qrTotal = 218;
-let alertActive = false;
+const TICKER_ITEMS = [
+  "KIM-COOLING • Fondée en 2017 à Pointe-Noire par Dorsel Kimbouala-Ngoma",
+  "Project ORCA : Construction des systèmes froid et climatisation",
+  "Project NAVIR MSC : Installation frigorifique maritime",
+  "Vision de l'entreprise : Unité frigorifique & panneaux solaires",
+  "Mission et valeurs : Intégrité, qualité & formation • +242 06 417 49 49",
+];
 
-// Navigation entre les modules
-document.querySelectorAll(".nav-item").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document
-      .querySelectorAll(".nav-item")
-      .forEach((b) => b.classList.remove("active"));
-    document
-      .querySelectorAll(".view")
-      .forEach((v) => v.classList.remove("active"));
-    btn.classList.add("active");
+const PARTNERS = [
+  { code: "MSC", name: "MSC", role: "Maritime & Réfrigération" },
+  { code: "ORCA", name: "ORCA", role: "Froid & Climatisation" },
+  { code: "EF", name: "Expertise France", role: "Groupe AFD" },
+  { code: "UCAC", name: "UCAC-ICAM", role: "Enseignement Supérieur" },
+  { code: "ESM", name: "ESMTCA", role: "École Supérieure" },
+  { code: "ECAM", name: "ECAM", role: "Partenaire Académique" },
+  { code: "CPGE", name: "IS-CPGE-CI", role: "Institut Supérieur" },
+  { code: "F2E", name: "F2E", role: "Partenaire Technique" },
+];
 
-    const targetView = document.getElementById(`view-${btn.dataset.view}`);
-    if (targetView) targetView.classList.add("active");
+const SERVICES = [
+  {
+    tag: "Climatisation",
+    title: "Installation de systèmes de climatisation",
+    desc: "Mise en place de climatiseurs split, multi-split, systèmes de climatisation centralisée et solutions adaptées aux besoins spécifiques des clients.",
+  },
+  {
+    tag: "Réfrigération HVAC",
+    title: "Installation de systèmes de réfrigération HVAC",
+    desc: "Installation de chambres froides, vitrines réfrigérées et systèmes de réfrigération pour l'agroalimentaire, la pharmacie, etc.",
+  },
+  {
+    tag: "Maintenance",
+    title: "Maintenance préventive & corrective",
+    desc: "Services réguliers pour vérifier, nettoyer et réparer les composants des systèmes de climatisation et de réfrigération afin d'éviter les pannes futures.",
+  },
+  {
+    tag: "Audit Énergétique",
+    title: "Audit énergétique et conseils",
+    desc: "Évaluation de l'efficacité énergétique des installations existantes et recommandations pour améliorer les performances et réduire les coûts d'exploitation.",
+  },
+  {
+    tag: "Équipements",
+    title: "Vente et fourniture d'équipements",
+    desc: "Offre d'équipements de climatisation et de réfrigération : compresseurs industriels, postes à souder, outillage de maintenance froid.",
+  },
+  {
+    tag: "Conformité",
+    title: "Expertise et contrôle des conformités des chambres froides",
+    desc: "Étude, contrôle et réalisation des travaux de plomberie industrielle, maintenance industrielle et maintenance multi-technique.",
+  },
+];
 
-    document.getElementById("viewTitle").textContent = btn.textContent.replace(
-      /^[^\wÀ-ÿ]+/,
-      "",
-    );
+const PROJECTS = [
+  {
+    title: "Project ORCA : Construction des systèmes froid et climatisation",
+    category: "industriel",
+    image: "actifs/projet-orca.jpg",
+    fallbackLabel: "PROJECT ORCA • FROID & CLIMATISATION",
+    badge: "Grand Compte • Climatisation & Froid",
+    desc: "En répondant de manière adéquate aux besoins, garantie du confort et de la satisfaction des clients et du personnel, de la qualité et de la sécurité des produits, avec optimisation des coûts énergétiques et respect des normes environnementales.",
+  },
+  {
+    title: "Project NAVIR MSC : Installation frigorifique",
+    category: "maritime",
+    image: "actifs/projet-msc.jpg",
+    fallbackLabel: "NAVIR MSC • INSTALLATION FRIGORIFIQUE",
+    badge: "Maritime • Réfrigération",
+    desc: "Conception, installation et maintenance de systèmes de réfrigération sur un navire de la Mediterranean Shipping Company (MSC) pour garantir la conservation et le transport sécurisé des marchandises périssables.",
+  },
+  {
+    title: "Vision de l'entreprise : Unité Frigorifique & Panneaux Solaires",
+    category: "solaire",
+    image: "actifs/histoire-solaire.jpg",
+    fallbackLabel: "VISION • PANNEAUX SOLAIRES",
+    badge: "Vision • Énergie & Froid Durable",
+    desc: "Déploiement de solutions frigorifiques éco-responsables combinant efficacité énergétique et panneaux solaires pour accompagner les projets durables en République du Congo et dans la région.",
+  },
+];
 
-    if (btn.dataset.view === "dg") {
-      renderPartenaires();
-      drawFinanceChart();
-    }
-    if (btn.dataset.view === "hvac") {
-      drawTelemetryChart(alertActive);
-    }
+const FORMATIONS = [
+  {
+    title: "Climatisation centrale (en module)",
+    duration: "2/6 mois",
+    level: "BAC - LICENCE - MASTER",
+    desc: "Installation, entretien, diagnostic et réparation de systèmes de climatisation centralisés (résidentiel, commercial, industriel).",
+  },
+  {
+    title: "Froid auto",
+    duration: "2/6 mois",
+    level: "BAC - LICENCE - MASTER",
+    desc: "Installation, entretien, diagnostic et réparation des systèmes de climatisation automobile.",
+  },
+  {
+    title: "Froid ménager",
+    duration: "3/6 mois",
+    level: "BAC - LICENCE - MASTER",
+    desc: "Installation, entretien, diagnostic et réparation des équipements de réfrigération domestique.",
+  },
+  {
+    title: "Dessin et conception assistées à l'ordinateur",
+    duration: "3/6 mois",
+    level: "BAC",
+    desc: "Création, modification et visualisation de dessins techniques et modèles avec logiciels spécialisés (CAO).",
+  },
+  {
+    title: "Climatisation de confort",
+    duration: "4/6 mois",
+    level: "BAC - LICENCE - MASTER",
+    desc: "Installation, entretien et réparation de systèmes de climatisation pour maisons, bureaux et bâtiments commerciaux.",
+  },
+  {
+    title: "Froid industriel et commercial",
+    duration: "6 mois",
+    level: "BAC",
+    desc: "Conception, installation, entretien et dépannage des systèmes de réfrigération industrielle et commerciale.",
+  },
+  {
+    title: "Système froid et climatisation HVAC",
+    duration: "6 mois",
+    level: "BAC",
+    desc: "Compétences complètes pour installer, entretenir, diagnostiquer et réparer les systèmes HVAC.",
+  },
+  {
+    title: "Électricité",
+    duration: "6 mois",
+    level: "BAC",
+    desc: "Intervention sécurisée et efficace sur les systèmes électriques résidentiels, commerciaux et industriels.",
+  },
+  {
+    title: "Automatisme et instrumentation",
+    duration: "6 mois",
+    level: "BAC",
+    desc: "Conception, installation, entretien et dépannage des systèmes automatisés et instruments de mesure.",
+  },
+  {
+    title: "Mécanique énergétique",
+    duration: "6 mois",
+    level: "BAC",
+    desc: "Compréhension, conception, analyse et optimisation des systèmes liés à la production, conversion et utilisation de l'énergie.",
+  },
+  {
+    title: "Audit énergétique",
+    duration: "6 mois",
+    level: "BAC",
+    desc: "Évaluation et optimisation de l'efficacité énergétique dans les bâtiments, industries et infrastructures.",
+  },
+  {
+    title: "Gestion de projet",
+    duration: "3/6 mois",
+    level: "BAC - LICENCE - MASTER",
+    desc: "Planification, organisation et pilotage de projets techniques (installation, maintenance, travaux) dans le respect des délais, coûts et qualité.",
+  },
+];
+
+function makeFallbackDataUri(label) {
+  const safe = String(label || "KIM-COOLING")
+    .slice(0, 34)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;");
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340">
+    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient></defs>
+    <rect width="600" height="340" fill="url(#g)"/>
+    <circle cx="515" cy="70" r="90" fill="#f97316" fill-opacity="0.22"/>
+    <text x="36" y="155" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="800">${safe}</text>
+    <text x="36" y="192" fill="#bae6fd" font-family="Segoe UI, Arial, sans-serif" font-size="16">KIM-COOLING • Pointe-Noire</text>
+  </svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+document.querySelectorAll("img[data-fallback]").forEach((img) => {
+  img.addEventListener("error", function onErr() {
+    this.onerror = null;
+    this.src = makeFallbackDataUri(this.dataset.fallback || this.alt);
   });
 });
 
-// Rendu des marchés
-function renderMarches() {
-  const tbody = document.getElementById("tbodyMarches");
-  if (!tbody) return;
-  tbody.innerHTML = "";
-  let ca = 0;
-
-  marches.forEach((m, idx) => {
-    ca += Number(m.montant);
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td><strong>${m.code}</strong></td>
-      <td>${m.client}</td>
-      <td>${m.objet}<br><small style="color:#94A3B8">${m.type}</small></td>
-      <td>${Number(m.montant).toLocaleString("fr-FR")} FCFA</td>
-      <td><span class="pill">${m.avancement}</span></td>
-      <td>
-        <button class="btn btn-cyan" style="padding:5px 10px;" onclick="quickQrMarche(${idx})">
-          Générer QR
-        </button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  const statCa = document.getElementById("statCa");
-  if (statCa) statCa.textContent = ca.toLocaleString("fr-FR") + " FCFA";
-  localStorage.setItem("kc_engineering_marches", JSON.stringify(marches));
+const tickerTrack = document.getElementById("ticker-track");
+if (tickerTrack) {
+  const repeated = [...TICKER_ITEMS, ...TICKER_ITEMS];
+  tickerTrack.innerHTML = repeated
+    .map(
+      (t) =>
+        `<span class="ticker-item"><span class="pulse-dot"></span>${t}</span>`,
+    )
+    .join("");
 }
 
-// Ajout d'un nouveau marché
-const formMarche = document.getElementById("formMarche");
-if (formMarche) {
-  formMarche.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const newItem = {
-      code: `MCH-PNR-${String(marches.length + 1).padStart(3, "0")}`,
-      client: document.getElementById("inClient").value.trim(),
-      objet: document.getElementById("inObjet").value.trim(),
-      type: document.getElementById("inType").value,
-      montant: Number(document.getElementById("inMontant").value),
-      avancement: document.getElementById("inAvancement").value,
-    };
-    marches.unshift(newItem);
-    renderMarches();
-    drawFinanceChart();
-    e.target.reset();
-  });
-}
-
-// Rendu des partenaires officiels
-function renderPartenaires() {
-  const container = document.querySelector(".partners-grid");
-  if (!container || typeof PARTENAIRES_OFFICIELS === "undefined") return;
-  container.innerHTML = PARTENAIRES_OFFICIELS.map(
-    (p) => `
-    <div class="partner-card">
-      <strong>${p.nom}</strong>
-      <span>${p.secteur}</span>
+const partnerMarquee = document.getElementById("partner-marquee");
+if (partnerMarquee) {
+  const doubled = [...PARTNERS, ...PARTNERS];
+  partnerMarquee.innerHTML = doubled
+    .map(
+      (p) => `
+    <div class="logo-tile">
+      <span class="logo-emblem">${p.code}</span>
+      <div>
+        <div class="logo-name">${p.name}</div>
+        <div class="logo-role">${p.role}</div>
+      </div>
     </div>
+  `,
+    )
+    .join("");
+}
+
+const servicesGrid = document.getElementById("services-grid");
+if (servicesGrid) {
+  servicesGrid.innerHTML = SERVICES.map(
+    (s) => `
+    <article class="item-card hover-lift">
+      <span class="item-tag">${s.tag}</span>
+      <h3>${s.title}</h3>
+      <p class="item-meta">${s.desc}</p>
+    </article>
   `,
   ).join("");
 }
 
-// Rendu du stock & fluides frigorigènes
-function renderStock() {
-  const tbody = document.getElementById("tbodyStock");
-  if (!tbody || typeof STOCK_ITEMS === "undefined") return;
-  tbody.innerHTML = STOCK_ITEMS.map((item) => {
-    const low = item.qte <= item.seuil;
-    return `
-      <tr>
-        <td><strong>${item.ref}</strong></td>
-        <td>${item.nom}</td>
-        <td>${item.cat}</td>
-        <td><strong>${item.qte}</strong></td>
-        <td>${item.seuil}</td>
-        <td><span class="pill ${low ? "warn" : ""}">${low ? "⚠️ Réappro Urgente" : "✓ Disponible"}</span></td>
-      </tr>
-    `;
-  }).join("");
+const projectsGrid = document.getElementById("projects-grid");
+function renderProjects(filter = "all") {
+  if (!projectsGrid) return;
+  const list =
+    filter === "all"
+      ? PROJECTS
+      : PROJECTS.filter((item) => item.category === filter);
+  projectsGrid.innerHTML = list
+    .map(
+      (item) => `
+    <article class="item-card hover-lift">
+      <img src="${item.image}" alt="${item.title}" class="card-photo" onerror="this.onerror=null;this.src='${makeFallbackDataUri(item.fallbackLabel)}'" />
+      <span class="item-tag">${item.badge}</span>
+      <h3>${item.title}</h3>
+      <p class="item-meta">${item.desc}</p>
+    </article>
+  `,
+    )
+    .join("");
 }
+renderProjects();
 
-// Générateur QR Code Haute Densité
-function buildQR(textPayload, caption) {
-  const box = document.getElementById("qrCanvas");
-  if (!box || typeof QRCode === "undefined") return;
-  box.innerHTML = "";
-
-  new QRCode(box, {
-    text: textPayload,
-    width: 185,
-    height: 185,
-    colorDark: "#06212E",
-    colorLight: "#FFFFFF",
-    correctLevel: QRCode.CorrectLevel.H,
+document.querySelectorAll("[data-filter]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document
+      .querySelectorAll("[data-filter]")
+      .forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderProjects(btn.dataset.filter);
   });
-
-  document.getElementById("qrCaption").textContent = caption;
-  document.getElementById("btnDownloadQr").style.display = "inline-flex";
-}
-
-const formQr = document.getElementById("formQr");
-if (formQr) {
-  formQr.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const tag = document.getElementById("qrTag").value.trim();
-    const site = document.getElementById("qrSite").value.trim();
-    const machine = document.getElementById("qrMachine").value.trim();
-    const fluide = document.getElementById("qrFluide").value.trim();
-    const next = document.getElementById("qrNextMaint").value;
-
-    const payload = `KIM COOLING ENGINEERING | GMAO | TAG:${tag} | SITE:${site} | EQUIP:${machine} | FLUIDE:${fluide} | PROCHAINE_MAINT:${next} | TEL:+242064174949`;
-    buildQR(payload, `${tag} — ${site} (${fluide})`);
-
-    qrTotal++;
-    const statQr = document.getElementById("statQr");
-    if (statQr) statQr.textContent = `${qrTotal} Actifs`;
-  });
-}
-
-// Génération QR rapide depuis un marché
-window.quickQrMarche = function (idx) {
-  const m = marches[idx];
-  if (!m) return;
-  document.querySelector('[data-view="gmao"]').click();
-  document.getElementById("qrTag").value = m.code;
-  document.getElementById("qrSite").value = m.client;
-  document.getElementById("qrMachine").value = m.objet;
-  buildQR(
-    `KIM COOLING ENGINEERING | MARCHE | ${m.code} | CLIENT:${m.client} | PROJET:${m.objet} | ETAT:${m.avancement}`,
-    `${m.code} — ${m.client}`,
-  );
-};
-
-// Téléchargement PNG de la plaque QR
-const btnDownloadQr = document.getElementById("btnDownloadQr");
-if (btnDownloadQr) {
-  btnDownloadQr.addEventListener("click", () => {
-    const img = document.querySelector("#qrCanvas img");
-    const canvas = document.querySelector("#qrCanvas canvas");
-    const dataUrl = img
-      ? img.src
-      : canvas
-        ? canvas.toDataURL("image/png")
-        : null;
-    if (!dataUrl) return;
-
-    const a = document.createElement("a");
-    a.href = dataUrl;
-    a.download = `PLAQUE-QR-KIM-COOLING-ENGINEERING-${Date.now()}.png`;
-    a.click();
-  });
-}
-
-// Simulation télémétrie HVAC
-const btnSimulerPanne = document.getElementById("btnSimulerPanne");
-if (btnSimulerPanne) {
-  btnSimulerPanne.addEventListener("click", () => {
-    alertActive = !alertActive;
-    tempSeries = alertActive
-      ? [-22.1, -21.8, -20.5, -18.9, -17.2, -16.8, -17.5, -18.1]
-      : [-22.1, -22.3, -22.0, -22.4, -22.2, -22.5, -22.3, -22.4];
-    btnSimulerPanne.textContent = alertActive
-      ? "↺ Rétablir Consigne Normale"
-      : "⚡ Simuler Dérive Thermique";
-    drawTelemetryChart(alertActive);
-  });
-}
-
-// Export CSV des marchés
-const btnExportReport = document.getElementById("btnExportReport");
-if (btnExportReport) {
-  btnExportReport.addEventListener("click", () => {
-    const rows = [
-      ["Code", "Client", "Objet", "Type", "Montant_FCFA", "Avancement"],
-      ...marches.map((m) => [
-        m.code,
-        m.client,
-        m.objet,
-        m.type,
-        m.montant,
-        m.avancement,
-      ]),
-    ];
-    const csv = rows
-      .map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(";"))
-      .join("\n");
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `Bilan_Marches_KIM_COOLING_ENGINEERING_${new Date().toISOString().slice(0, 10)}.csv`;
-    a.click();
-  });
-}
-
-// Copie des liens DG et Client
-function copyRoleLink(role, label) {
-  const url = new URL(window.location.href);
-  url.searchParams.set("access", role);
-  navigator.clipboard.writeText(url.toString()).then(() => {
-    const toast = document.getElementById("toastMsg");
-    if (toast) {
-      toast.textContent = `✓ Lien ${label} copié !`;
-      setTimeout(() => {
-        toast.textContent = "";
-      }, 3500);
-    }
-  });
-}
-
-const btnShareDG = document.getElementById("btnShareDG");
-if (btnShareDG) {
-  btnShareDG.addEventListener("click", () =>
-    copyRoleLink("DG_Dorsel_Kimbouala", "Direction Générale"),
-  );
-}
-
-const btnShareClient = document.getElementById("btnShareClient");
-if (btnShareClient) {
-  btnShareClient.addEventListener("click", () =>
-    copyRoleLink("PORTAIL_CLIENT_B2B", "Espace Client"),
-  );
-}
-
-// Routage selon le paramètre d'accès dans l'URL
-const accessParam = new URLSearchParams(window.location.search).get("access");
-if (accessParam === "PORTAIL_CLIENT_B2B") {
-  document.querySelector('[data-view="client"]')?.click();
-} else if (accessParam && accessParam.startsWith("DG")) {
-  document.getElementById("viewTitle").textContent =
-    "Bienvenue, DG Dorsel Kimbouala-Ngoma";
-}
-
-// Initialisation complète
-renderMarches();
-renderPartenaires();
-renderStock();
-window.addEventListener("load", () => {
-  drawFinanceChart();
-  drawTelemetryChart(alertActive);
 });
-window.addEventListener("resize", () => {
-  drawFinanceChart();
-  drawTelemetryChart(alertActive);
+
+const formationsGrid = document.getElementById("formations-grid");
+function renderFormations(duration = "all") {
+  if (!formationsGrid) return;
+  const list =
+    duration === "all"
+      ? FORMATIONS
+      : FORMATIONS.filter((f) => f.duration === duration);
+  formationsGrid.innerHTML = list
+    .map(
+      (f) => `
+    <article class="item-card hover-lift">
+      <span class="item-tag">Durée : ${f.duration}</span>
+      <h3>${f.title}</h3>
+      <p class="item-meta">${f.desc}</p>
+      <p class="item-meta"><strong>Niveau d'étude :</strong> ${f.level}</p>
+    </article>
+  `,
+    )
+    .join("");
+}
+renderFormations();
+
+document.querySelectorAll("[data-duration]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document
+      .querySelectorAll("[data-duration]")
+      .forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderFormations(btn.dataset.duration);
+  });
+});
+
+document.querySelectorAll(".nav-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document
+      .querySelectorAll(".nav-btn")
+      .forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    const target = btn.dataset.tab;
+    document.querySelectorAll(".tab-panel").forEach((panel) => {
+      panel.classList.toggle("active", panel.id === `tab-${target}`);
+    });
+  });
+});
+
+const params = new URLSearchParams(window.location.search);
+const statusPill = document.getElementById("dg-status");
+if (params.get("access") === "DG_Dorsel_Kimbouala" && statusPill) {
+  statusPill.textContent = "DG Dorsel Kimbouala-Ngoma";
+  statusPill.classList.add("dg-active");
+}
+
+document.getElementById("btn-dg-link")?.addEventListener("click", () => {
+  const baseUrl = `${window.location.origin}${window.location.pathname}`;
+  const dgUrl = `${baseUrl}?access=DG_Dorsel_Kimbouala`;
+  navigator.clipboard?.writeText(dgUrl).catch(() => {});
+  alert(`Lien Exécutif DG :\n${dgUrl}`);
+});
+
+document.getElementById("rdv-form")?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const nom = document.getElementById("rdv-nom").value.trim();
+  document.getElementById("rdv-feedback").textContent =
+    `Demande enregistrée pour ${nom}. Contact : +242 06 417 49 49 / contact@kim-cooling.com.`;
+  e.target.reset();
 });
